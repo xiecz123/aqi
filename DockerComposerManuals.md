@@ -17,8 +17,8 @@ Learn more docker compose <a href="https://docs.docker.com/compose/overview/" ta
 ```
     your_ip:8183
     Server: mysql
-    Username: root/root
-    Password: root/pass
+    Username: root
+    Password: pass
 ```
 5. Access mysql on terminal
 ```
