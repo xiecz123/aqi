@@ -3,6 +3,7 @@ const request = require('../utils/request')
 const db = require("../models");
 const postObj = db.aqi;
 const { TOKEN, CITYS } = require('../constants/index')
+const logger = require('../logs');
 
 const CRON_CONFIG = {
     reply: '每隔1小时运行一次',
@@ -21,7 +22,8 @@ const CRON_CONFIG = {
     // time: '0 */1 * * * *',
   }
 
-exports.crontab =  () => {
+exports.crontab = () => {
+  logger.info('重新运行cron了')
   const job = new CronJob(
     CRON_CONFIG.time,
     async () => {

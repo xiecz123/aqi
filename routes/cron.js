@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const Aqi = require("../controllers/aqi");
+const Cron = require("../controllers/cron");
 
 // user
-router.get("/start", Aqi.startCron);
+router.get("/start", Cron.startCron);
 
-router.get("/stop", Aqi.stopCron);
+router.get("/stop", Cron.stopCron);
 
-router.get("/nextDates/:nextNum", Aqi.nextDates);
+router.get("/nextDates/:nextNum", Cron.nextDates);
 
 module.exports = router;
