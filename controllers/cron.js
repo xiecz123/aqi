@@ -1,9 +1,10 @@
 const db = require("../models");
-const { crontab } = require('../plugins/crontab')
+const { crontab } = require('./crontab')
+const logger = require('../logs');
 
 const job = crontab()
 job.start()
-console.log('成功启动定时任务')
+logger.info('成功启动定时任务')
 
 exports.startCron = (request, result) => {
   job.start()

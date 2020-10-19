@@ -3,6 +3,7 @@ const request = require('../utils/request')
 const db = require("../models");
 const postObj = db.aqi;
 const { TOKEN, CITYS } = require('../constants/index')
+const operationDB = require('./aqi-operationDB')
 const logger = require('../logs');
 
 const CRON_CONFIG = {
@@ -40,13 +41,30 @@ exports.crontab = () => {
   return job
 }
 
-async function setCityAQI(city) {
+
+// numOfSycles 循环次数，最多4次
+async function setCityAQI(city, numOfSycles = 5) {
+  if (numOfSycles === 0) return;
+  numOfSycles--
   try {
     const data = await fetchCityAQI(city)
-    // const dbData = await queryCityAQI(city, data.localTime)
-    // if (dbData && dbData.length > 0) {
-    //   return;
-    // }
+    const currentMinutes = (new Date).getMinutes()
+    
+    if (data.localTime) {
+      const amount = await operationDB.queryCityCountByLocalTime(city, data.localTime)
+      // 如果数据库中有相同的数据，1分钟后再次查询
+      if (amount > 0) {
+        logger.info('当前时间' + new Date + '已有重复数据')
+        // 整点过20分钟以内的请求才会重新请求
+        if (60 - currentMinutes > 40) {
+          logger.info('一分钟后再次查询，还剩' + numOfSycles + '次查询')
+          setTimeout(() => {
+            setCityAQI(city, numOfSycles)
+          }, 1000 * 60)
+        }
+        return;
+      }
+    }
 
     // Save Post object to db
     const createBack = await postObj.create(data)
@@ -55,16 +73,7 @@ async function setCityAQI(city) {
   }
 }
 
-async function queryCityAQI(city, localTime) {
-  const data = await postObj.findAll({
-    where: {
-      city,
-      localTime
-    }
-  })
-  return data
-}
-
+// 从waqi提供的api中查询数据
 async function fetchCityAQI(city) {
   if (!city) {
     return
@@ -92,7 +101,7 @@ async function fetchCityAQI(city) {
       }
       return post
     } else {
-      throw new Error('request status error')
+      throw new Error('request status error, city name is ' + city )
     }
   } catch (error) {
     console.log(error)
