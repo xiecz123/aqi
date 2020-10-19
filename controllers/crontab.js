@@ -55,8 +55,8 @@ async function setCityAQI(city, numOfSycles = 5) {
       // 如果数据库中有相同的数据，1分钟后再次查询
       if (amount > 0) {
         logger.info('当前时间' + new Date + '已有重复数据')
-        // 整点过20分钟以内的请求才会重新请求
-        if (60 - currentMinutes > 40) {
+        // 整点过30分钟以内的请求才会重新请求
+        if (60 - currentMinutes > 30) {
           logger.info('一分钟后再次查询，还剩' + numOfSycles + '次查询')
           setTimeout(() => {
             setCityAQI(city, numOfSycles)
@@ -69,7 +69,7 @@ async function setCityAQI(city, numOfSycles = 5) {
     // Save Post object to db
     const createBack = await postObj.create(data)
   } catch (error) {
-    console.log(error)
+    logger.error(error)
   }
 }
 
@@ -86,7 +86,7 @@ async function fetchCityAQI(city) {
         city: city,
         localTime: s,
         idx: idx,
-        aqi: aqi, 
+        aqi: (typeof aqi === 'number') ? aqi : null, 
         co: co ? co.v : null,
         dew: dew ? dew.v : null,
         h: h ? h.v : null,
@@ -104,7 +104,7 @@ async function fetchCityAQI(city) {
       throw new Error('request status error, city name is ' + city )
     }
   } catch (error) {
-    console.log(error)
+    logger.error(error)
     throw new Error(error)
   }
 };
