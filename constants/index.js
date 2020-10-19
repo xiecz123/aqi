@@ -15,7 +15,7 @@ const WORLD = {
         city: ['Beijing', 'Shanghai', 'Guangzhou', 'Shenzhen']
       },
       Thailand: {
-        city: ['Bangkok', 'Chiang Mai', 'Pattaya']
+        city: ['Bangkok', 'Chiang Mai']
       },
       Singapore: {
         city: ['Singapore']
@@ -54,21 +54,21 @@ const WORLD = {
       }
     },
     'South America': {
-      Venezuela: {
-        city: ['Caracas']
-      },
+      // Venezuela: {
+      //   city: ['Caracas']
+      // },
       Brazil: {
         city: ['Sao Paulo']
       },
       Argentina: {
         city: ['Buenos Aires']
       },
-      Colombia: {
-        city: ['Bogotá']
-      },
-      Uruguay: {
-        city: ['Montevideo']
-      },
+      // Colombia: {
+      //   city: ['Bogotá']
+      // },
+      // Uruguay: {
+      //   city: ['Montevideo']
+      // },
       Peru: {
         city: ['Lima']
       }
@@ -83,9 +83,9 @@ const WORLD = {
       Mexico: {
         city: ['Mexico']
       },
-      Cuba: {
-        city: ['Havana']
-      }
+      // Cuba: {
+      //   city: ['Havana']
+      // }
     },
     Oceania: {
       Australia: {
@@ -99,12 +99,12 @@ const WORLD = {
       }
     },
     Africa: {
-      Congo: {
-        city: ['Brazzaville']
-      },
-      Egypt: {
-        city: ['Cairo']
-      },
+      // Congo: {
+      //   city: ['Brazzaville']
+      // },
+      // Egypt: {
+      //   city: ['Cairo']
+      // },
       'South Africa': {
         city: ['Cape Town']
       },
@@ -120,6 +120,10 @@ const WORLD = {
 const CITYS = Object.keys(WORLD).map(continent => {
   return Object.keys(WORLD[continent]).map(country => WORLD[continent][country].city)
 }).flat(2)
+// const CITYS = ['Sydney']
+
+// 这些城市查不到数据
+// Pattaya  Caracas Bogotá Montevideo Havana  Brazzaville  Cairo
 
 module.exports = {
   TOKEN,
