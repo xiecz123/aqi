@@ -1,3 +1,5 @@
+base on [node_rest_api_with_mysql](https://github.com/cploutarchou/node_rest_api_with_mysql)
+
 # air quality index serve
 
 > 项目在 docker 中运行。
