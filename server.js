@@ -1,11 +1,3 @@
-/**
- * Created by Christos Ploutarchou
- * Project : node_rest_api_with_mysql
- * Filename : app.js
- * Date: 03/04/2020
- * Time: 12:22
- **/
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
